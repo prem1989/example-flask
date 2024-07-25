@@ -11,7 +11,8 @@ def handle_post():
     # Get the JSON data from the request
     data = request.get_json()
     # Print the data to the console
-    print(data)
+    print(data.stocks)
+    print(data.scan_name)
     # Return a success message
     return 'JSON received!'
 
