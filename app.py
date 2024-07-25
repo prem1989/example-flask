@@ -1,5 +1,6 @@
 from flask import Flask
 from flask import request
+from flask import json
 app = Flask(__name__)
 
 @app.route('/')
@@ -11,8 +12,8 @@ def handle_post():
     # Get the JSON data from the request
     data = request.get_json()
     # Print the data to the console
-    print(data.stocks)
-    print(data.scan_name)
+    print(data.get('stocks'))
+    print(data.get('scan_name'))
     # Return a success message
     return 'JSON received!'
 
