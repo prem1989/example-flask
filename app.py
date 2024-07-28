@@ -3,6 +3,7 @@ from flask import request
 from flask import json
 from alice import placeOrder
 from alice import getScriptDetails
+from alice import getUserSession
 app = Flask(__name__)
 
 @app.route('/')
@@ -16,8 +17,15 @@ def handle_post():
     # Print the data to the console
     print(data.get('stocks'))
     print(data.get('scan_name'))
-    print(getScriptDetails(data.get('stocks')))
-    print(placeOrder(data.get('stocks')))
+    sessionid=getUserSession()
+    orderHeaders = {
+      'Authorization': 'Bearer '+sessionid,
+      'Content-Type': 'application/json'
+    }
+    contract = getContractDetails(orderHeaders,data.get('stocks'))
+    script = getScriptDetails(orderHeaders,contract.get('token'))
+    print(script.get('TSymbl'))
+    placeOrder(orderHeaders,script.get('TSymbl'))
     # Return a success message
     return 'JSON received!'
 
