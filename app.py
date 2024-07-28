@@ -26,7 +26,16 @@ def handle_post():
       'Content-Type': 'application/json'
     }
     print(orderHeaders)
-    if type(data.get('stocks')) is list:
+    if isinstance(data.get('stocks'), str):
+        contract = getContractDetails(orderHeaders,i)
+        print(contract.get('token'))
+        script = getScriptDetails(orderHeaders,contract.get('token'))
+        print(script.get('TSymbl'))
+        if scanname=='GGG':
+            placeBuyOrder(orderHeaders,script.get('TSymbl'),contract.get('token'),script.get('LTP'),script.get('LTP'))
+        if scanname=='RRR':
+            placeSellOrder(orderHeaders,script.get('TSymbl'),contract.get('token'),script.get('LTP'),script.get('LTP'))
+    else:
         for i in data.get('stocks'):
             contract = getContractDetails(orderHeaders,i)
             print(contract.get('token'))
@@ -36,16 +45,6 @@ def handle_post():
                 placeBuyOrder(orderHeaders,script.get('TSymbl'),contract.get('token'),script.get('LTP'),script.get('LTP'))
             if scanname=='RRR':
                 placeSellOrder(orderHeaders,script.get('TSymbl'),contract.get('token'),script.get('LTP'),script.get('LTP'))
-
-    else:
-        contract = getContractDetails(orderHeaders,i)
-        print(contract.get('token'))
-        script = getScriptDetails(orderHeaders,contract.get('token'))
-        print(script.get('TSymbl'))
-        if scanname=='GGG':
-            placeBuyOrder(orderHeaders,script.get('TSymbl'),contract.get('token'),script.get('LTP'),script.get('LTP'))
-        if scanname=='RRR':
-            placeSellOrder(orderHeaders,script.get('TSymbl'),contract.get('token'),script.get('LTP'),script.get('LTP'))
         
     # Return a success message
     return 'JSON received!'
