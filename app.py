@@ -17,6 +17,7 @@ def handle_post():
     data = request.get_json()
     # Print the data to the console
     print(data.get('stocks'))
+    scanname=data.get('scan_name')
     print(data.get('scan_name'))
     sessionid=getUserSession()
     orderHeaders = {
@@ -28,7 +29,10 @@ def handle_post():
     print(contract.get('token'))
     script = getScriptDetails(orderHeaders,contract.get('token'))
     print(script.get('TSymbl'))
-    placeOrder(orderHeaders,script.get('TSymbl'))
+    if scanname=='GGG':
+        placeBuyOrder(orderHeaders,script.get('TSymbl'),contract.get('token'),script.get('LTP'))
+    if scanname=='RRR':
+        placeSellOrder(orderHeaders,script.get('TSymbl'),contract.get('token'),script.get('LTP'))
     # Return a success message
     return 'JSON received!'
 
