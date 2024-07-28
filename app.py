@@ -23,6 +23,7 @@ def handle_post():
       'Authorization': 'Bearer '+sessionid,
       'Content-Type': 'application/json'
     }
+    print(orderHeaders)
     contract = getContractDetails(orderHeaders,data.get('stocks'))
     print(contract.get('token'))
     script = getScriptDetails(orderHeaders,contract.get('token'))
