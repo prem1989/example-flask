@@ -27,7 +27,7 @@ def handle_post():
     }
     print(orderHeaders)
     if isinstance(data.get('stocks'), str):
-        contract = getContractDetails(orderHeaders,i)
+        contract = getContractDetails(orderHeaders,data.get('stocks'))
         print(contract.get('token'))
         script = getScriptDetails(orderHeaders,contract.get('token'))
         print(script.get('TSymbl'))
