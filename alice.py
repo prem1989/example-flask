@@ -34,6 +34,7 @@ def getUserSession():
     print(sessionresponse.text)
     json_obj_session = json.loads(sessionresponse.text)
     sessionid = (json_obj_session['sessionID'])
+    return sessionid
     
 def placeOrder(stockName):
     sessionid = getUserSession()
