@@ -36,21 +36,42 @@ def getUserSession():
     sessionid = (json_obj_session['sessionID'])
     return sessionid
     
-def placeOrder(orderHeaders,stockName):
+def placeBuyOrder(orderHeaders,stockName,symbolId,price,trigPrice):
     orderPayload = json.dumps([
       {
         "complexty": "regular",
         "discqty": "0",
         "exch": "NSE",
         "pCode": "MIS",
-        "prctyp": "L",
-        "price": "3550.00",
+        "prctyp": "SL",
+        "price": price,
         "qty": 1,
         "ret": "DAY",
-        "symbol_id": "212",
+        "symbol_id": symbolId,
         "trading_symbol": stockName,
         "transtype": "BUY",
-        "trigPrice": "",
+        "trigPrice": trigPrice,
+        "orderTag": "order1"
+      }
+    ])
+    orderResponse = requests.request("POST", orderurl, headers=orderHeaders, data=orderPayload)
+    print(orderResponse.json())
+
+def placeSellOrder(orderHeaders,stockName,symbolId,price,trigPrice):
+    orderPayload = json.dumps([
+      {
+        "complexty": "regular",
+        "discqty": "0",
+        "exch": "NSE",
+        "pCode": "MIS",
+        "prctyp": "SL",
+        "price": price,
+        "qty": 1,
+        "ret": "DAY",
+        "symbol_id": symbolId,
+        "trading_symbol": stockName,
+        "transtype": "SELL",
+        "trigPrice": trigPrice,
         "orderTag": "order1"
       }
     ])
