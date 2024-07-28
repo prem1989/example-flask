@@ -30,25 +30,34 @@ def handle_post():
         contract = getContractDetails(orderHeaders,data.get('stocks'))
         print(contract.get('token'))
         script = getScriptDetails(orderHeaders,contract.get('token'))
-        ltp=int(script.get('LTP'))
+        ltp=int(float(script.get('LTP')))
         if scanname=='GGG':
-            high=int(script.get('High'))
-            high = high+(ltp*0.002)
+            high=int(float(script.get('High')))
+            high = high+(ltp*0.001)
+            high = round(high,1)
             placeBuyOrder(orderHeaders,script.get('TSymbl'),contract.get('token'),high,high)
         if scanname=='RRR':
-            low=int(script.get('Low'))
-            low = low - (ltp*0.002)
+            low=int(float(script.get('Low')))
+            low = low - (ltp*0.001)
+            low = round(low,1)
             placeSellOrder(orderHeaders,script.get('TSymbl'),contract.get('token'),low,low)
     else:
         for i in data.get('stocks'):
             contract = getContractDetails(orderHeaders,i)
             print(contract.get('token'))
             script = getScriptDetails(orderHeaders,contract.get('token'))
+            ltp=int(float(script.get('LTP')))
             print(script.get('TSymbl'))
             if scanname=='GGG':
-                placeBuyOrder(orderHeaders,script.get('TSymbl'),contract.get('token'),script.get('LTP'),script.get('LTP'))
+                high=int(float(script.get('High')))
+                high = high+(ltp*0.001)
+                high = round(high,1)
+                placeBuyOrder(orderHeaders,script.get('TSymbl'),contract.get('token'),high,high)
             if scanname=='RRR':
-                placeSellOrder(orderHeaders,script.get('TSymbl'),contract.get('token'),script.get('LTP'),script.get('LTP'))
+                low=int(float(script.get('Low')))
+                low = low - (ltp*0.001)
+                low = round(low,1)
+                placeSellOrder(orderHeaders,script.get('TSymbl'),contract.get('token'),low,low)
         
     # Return a success message
     return 'JSON received!'
