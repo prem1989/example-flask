@@ -1,6 +1,8 @@
 from flask import Flask
 from flask import request
 from flask import json
+from alice import placeOrder
+from alice import getScriptDetails
 app = Flask(__name__)
 
 @app.route('/')
