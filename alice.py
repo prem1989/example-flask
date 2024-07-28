@@ -35,13 +35,13 @@ def getUserSession():
     json_obj_session = json.loads(sessionresponse.text)
     sessionid = (json_obj_session['sessionID'])
     
-def placeOrder():
+def placeOrder(stockName):
     sessionid = getUserSession()
     orderPayload = json.dumps([
       {
         "complexty": "regular",
         "discqty": "0",
-        "exch": "NSE",
+        "exch": stockName,
         "pCode": "MIS",
         "prctyp": "L",
         "price": "3550.00",
@@ -61,7 +61,7 @@ def placeOrder():
     orderResponse = requests.request("POST", orderurl, headers=orderHeaders, data=orderPayload)
     print(orderResponse.text)
 
-def getScriptDetails():
+def getScriptDetails(stockName):
     sessionid = getUserSession()
     orderHeaders = {
       'Authorization': 'Bearer '+sessionid,
@@ -70,7 +70,7 @@ def getScriptDetails():
     scriptdata = json.dumps(
       {
         "exch": "NSE", 
-        "symbol": "INFY-EQ"
+        "symbol": stockName
       }
     )
 
