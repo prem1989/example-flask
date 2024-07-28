@@ -26,14 +26,15 @@ def handle_post():
       'Content-Type': 'application/json'
     }
     print(orderHeaders)
-    contract = getContractDetails(orderHeaders,data.get('stocks'))
-    print(contract.get('token'))
-    script = getScriptDetails(orderHeaders,contract.get('token'))
-    print(script.get('TSymbl'))
-    if scanname=='GGG':
-        placeBuyOrder(orderHeaders,script.get('TSymbl'),contract.get('token'),script.get('LTP'),script.get('LTP'))
-    if scanname=='RRR':
-        placeSellOrder(orderHeaders,script.get('TSymbl'),contract.get('token'),script.get('LTP'),script.get('LTP'))
+    for i in data.get('stocks'):
+        contract = getContractDetails(orderHeaders,i)
+        print(contract.get('token'))
+        script = getScriptDetails(orderHeaders,contract.get('token'))
+        print(script.get('TSymbl'))
+        if scanname=='GGG':
+            placeBuyOrder(orderHeaders,script.get('TSymbl'),contract.get('token'),script.get('LTP'),script.get('LTP'))
+        if scanname=='RRR':
+            placeSellOrder(orderHeaders,script.get('TSymbl'),contract.get('token'),script.get('LTP'),script.get('LTP'))
     # Return a success message
     return 'JSON received!'
 
