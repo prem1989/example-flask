@@ -4,6 +4,7 @@ from flask import json
 from alice import placeOrder
 from alice import getScriptDetails
 from alice import getUserSession
+from alice import getContractDetails
 app = Flask(__name__)
 
 @app.route('/')
@@ -23,6 +24,7 @@ def handle_post():
       'Content-Type': 'application/json'
     }
     contract = getContractDetails(orderHeaders,data.get('stocks'))
+    print(contract.get('token')
     script = getScriptDetails(orderHeaders,contract.get('token'))
     print(script.get('TSymbl'))
     placeOrder(orderHeaders,script.get('TSymbl'))
