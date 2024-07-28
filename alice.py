@@ -67,6 +67,7 @@ def getScriptDetails(orderHeaders,stockName):
 
     scriptDetailResponse = requests.request("POST", scriptDetailsurl, headers=orderHeaders, data=scriptdata)
     print(scriptDetailResponse.json())
+    return json.loads(scriptDetailResponse.text)
 
 def getContractDetails(orderHeaders,symbol):
     master_contract = requests.request("GET", masterurl, headers=orderHeaders)
