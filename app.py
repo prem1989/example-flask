@@ -24,7 +24,7 @@ def handle_post():
       'Content-Type': 'application/json'
     }
     contract = getContractDetails(orderHeaders,data.get('stocks'))
-    print(contract.get('token')
+    print(contract.get('token'))
     script = getScriptDetails(orderHeaders,contract.get('token'))
     print(script.get('TSymbl'))
     placeOrder(orderHeaders,script.get('TSymbl'))
