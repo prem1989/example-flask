@@ -16,6 +16,8 @@ def handle_post():
     # Print the data to the console
     print(data.get('stocks'))
     print(data.get('scan_name'))
+    print(getScriptDetails(data.get('stocks')))
+    print(placeOrder(data.get('stocks')))
     # Return a success message
     return 'JSON received!'
 
