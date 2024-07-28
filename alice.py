@@ -42,14 +42,14 @@ def placeOrder(stockName):
       {
         "complexty": "regular",
         "discqty": "0",
-        "exch": stockName,
+        "exch": "NSE",
         "pCode": "MIS",
         "prctyp": "L",
         "price": "3550.00",
         "qty": 1,
         "ret": "DAY",
         "symbol_id": "212",
-        "trading_symbol": "ASHOKLEY-EQ",
+        "trading_symbol": stockName,
         "transtype": "BUY",
         "trigPrice": "",
         "orderTag": "order1"
@@ -60,7 +60,7 @@ def placeOrder(stockName):
       'Content-Type': 'application/json'
     }
     orderResponse = requests.request("POST", orderurl, headers=orderHeaders, data=orderPayload)
-    print(orderResponse.text)
+    print(orderResponse.json())
 
 def getScriptDetails(stockName):
     sessionid = getUserSession()
