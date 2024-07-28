@@ -31,9 +31,9 @@ def handle_post():
     script = getScriptDetails(orderHeaders,contract.get('token'))
     print(script.get('TSymbl'))
     if scanname=='GGG':
-        placeBuyOrder(orderHeaders,script.get('TSymbl'),contract.get('token'),script.get('LTP'))
+        placeBuyOrder(orderHeaders,script.get('TSymbl'),contract.get('token'),script.get('LTP'),script.get('LTP'))
     if scanname=='RRR':
-        placeSellOrder(orderHeaders,script.get('TSymbl'),contract.get('token'),script.get('LTP'))
+        placeSellOrder(orderHeaders,script.get('TSymbl'),contract.get('token'),script.get('LTP'),script.get('LTP'))
     # Return a success message
     return 'JSON received!'
 
