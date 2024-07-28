@@ -6,7 +6,7 @@ sessionurl = 'https://ant.aliceblueonline.com/rest/AliceBlueAPIService/api/custo
 orderurl = 'https://ant.aliceblueonline.com/rest/AliceBlueAPIService/api/placeOrder/executePlaceOrder'
 websurl = 'https://ant.aliceblueonline.com/rest/AliceBlueAPIService/api//ws/createWsSession'
 scriptDetailsurl = 'https://ant.aliceblueonline.com/rest/AliceBlueAPIService/api/ScripDetails/getScripQuoteDetails'
-
+masterurl = 'https://v2api.aliceblueonline.com/restpy/contract_master?exch=NSE'
 
 def getUserSession():
 
@@ -36,8 +36,7 @@ def getUserSession():
     sessionid = (json_obj_session['sessionID'])
     return sessionid
     
-def placeOrder(stockName):
-    sessionid = getUserSession()
+def placeOrder(orderHeaders,stockName):
     orderPayload = json.dumps([
       {
         "complexty": "regular",
@@ -55,19 +54,10 @@ def placeOrder(stockName):
         "orderTag": "order1"
       }
     ])
-    orderHeaders = {
-      'Authorization': 'Bearer '+sessionid,
-      'Content-Type': 'application/json'
-    }
     orderResponse = requests.request("POST", orderurl, headers=orderHeaders, data=orderPayload)
     print(orderResponse.json())
 
-def getScriptDetails(stockName):
-    sessionid = getUserSession()
-    orderHeaders = {
-      'Authorization': 'Bearer '+sessionid,
-      'Content-Type': 'application/json'
-    }
+def getScriptDetails(orderHeaders,stockName):
     scriptdata = json.dumps(
       {
         "exch": "NSE", 
@@ -77,3 +67,11 @@ def getScriptDetails(stockName):
 
     scriptDetailResponse = requests.request("POST", scriptDetailsurl, headers=orderHeaders, data=scriptdata)
     print(scriptDetailResponse.json())
+
+def getContractDetails(orderHeaders,symbol):
+    master_contract = requests.request("GET", masterurl, headers=orderHeaders)
+    master=json.loads(master_contract.text)
+    for contract in master['NSE']:
+        if contract.get('symbol')==symbol:
+            print(contract)
+            return contract
