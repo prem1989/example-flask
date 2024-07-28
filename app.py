@@ -30,11 +30,15 @@ def handle_post():
         contract = getContractDetails(orderHeaders,data.get('stocks'))
         print(contract.get('token'))
         script = getScriptDetails(orderHeaders,contract.get('token'))
-        print(script.get('TSymbl'))
+        ltp=int(script.get('LTP'))
         if scanname=='GGG':
-            placeBuyOrder(orderHeaders,script.get('TSymbl'),contract.get('token'),script.get('LTP'),script.get('LTP'))
+            high=int(script.get('High'))
+            high = high+(ltp*0.002)
+            placeBuyOrder(orderHeaders,script.get('TSymbl'),contract.get('token'),high,high)
         if scanname=='RRR':
-            placeSellOrder(orderHeaders,script.get('TSymbl'),contract.get('token'),script.get('LTP'),script.get('LTP'))
+            low=int(script.get('Low'))
+            low = low - (ltp*0.002)
+            placeSellOrder(orderHeaders,script.get('TSymbl'),contract.get('token'),low,low)
     else:
         for i in data.get('stocks'):
             contract = getContractDetails(orderHeaders,i)
