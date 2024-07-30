@@ -16,7 +16,6 @@ def hello_world():
 def handle_post():
     # Get the JSON data from the request
     data = request.get_json()
-    print(data)
     # Print the data to the console
     print(data.get('stocks'))
     scanname=data.get('scan_name')
