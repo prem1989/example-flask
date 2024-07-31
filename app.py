@@ -27,7 +27,7 @@ def handle_post():
       'Content-Type': 'application/json'
     }
     print(orderHeaders)
-    stocklist=data.get('stocks').split(", ")
+    stocklist=data.get('stocks').split(",")
     for i in stocklist:
         contract = getContractDetails(orderHeaders,i)
         print(contract.get('token'))
