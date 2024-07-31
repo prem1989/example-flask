@@ -27,11 +27,13 @@ def handle_post():
       'Content-Type': 'application/json'
     }
     print(orderHeaders)
-    if isinstance(data.get('stocks'), str):
-        contract = getContractDetails(orderHeaders,data.get('stocks'))
+    stocklist=data.get('stocks').split(", ")
+    for i in stocklist:
+        contract = getContractDetails(orderHeaders,i)
         print(contract.get('token'))
         script = getScriptDetails(orderHeaders,contract.get('token'))
         ltp=int(float(script.get('LTP')))
+        print(script.get('TSymbl'))
         if scanname=='GGG':
             high=int(float(script.get('High')))
             high = high+(ltp*0.001)
@@ -42,23 +44,6 @@ def handle_post():
             low = low - (ltp*0.001)
             low = round(low,1)
             placeSellOrder(orderHeaders,script.get('TSymbl'),contract.get('token'),low,low)
-    else:
-        for i in data.get('stocks'):
-            contract = getContractDetails(orderHeaders,i)
-            print(contract.get('token'))
-            script = getScriptDetails(orderHeaders,contract.get('token'))
-            ltp=int(float(script.get('LTP')))
-            print(script.get('TSymbl'))
-            if scanname=='GGG':
-                high=int(float(script.get('High')))
-                high = high+(ltp*0.001)
-                high = round(high,1)
-                placeBuyOrder(orderHeaders,script.get('TSymbl'),contract.get('token'),high,high)
-            if scanname=='RRR':
-                low=int(float(script.get('Low')))
-                low = low - (ltp*0.001)
-                low = round(low,1)
-                placeSellOrder(orderHeaders,script.get('TSymbl'),contract.get('token'),low,low)
         
     # Return a success message
     return 'JSON received!'
