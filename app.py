@@ -6,6 +6,7 @@ from alice import placeSellOrder
 from alice import getScriptDetails
 from alice import getUserSession
 from alice import getContractDetails
+from datetime import datetime
 app = Flask(__name__)
 
 @app.route('/')
@@ -21,29 +22,33 @@ def handle_post():
     print(data.get('stocks'))
     scanname=data.get('scan_name')
     print(data.get('scan_name'))
-    sessionid=getUserSession()
-    orderHeaders = {
-      'Authorization': 'Bearer '+sessionid,
-      'Content-Type': 'application/json'
-    }
-    print(orderHeaders)
-    stocklist=data.get('stocks').split(",")
-    for i in stocklist:
-        contract = getContractDetails(orderHeaders,i)
-        print(contract.get('token'))
-        script = getScriptDetails(orderHeaders,contract.get('token'))
-        ltp=int(float(script.get('LTP')))
-        print(script.get('TSymbl'))
-        if scanname=='GGG':
-            high=int(float(script.get('High')))
-            high = high+(ltp*0.001)
-            high = round(high,1)
-            placeBuyOrder(orderHeaders,script.get('TSymbl'),contract.get('token'),high,high)
-        if scanname=='RRR':
-            low=int(float(script.get('Low')))
-            low = low - (ltp*0.001)
-            low = round(low,1)
-            placeSellOrder(orderHeaders,script.get('TSymbl'),contract.get('token'),low,low)
+    start = datetime.time(9, 0, 0)
+    end = datetime.time(10, 30, 0)
+    current = datetime.datetime.now().time()
+    if time_in_range(start, end, current):
+        sessionid=getUserSession()
+        orderHeaders = {
+          'Authorization': 'Bearer '+sessionid,
+          'Content-Type': 'application/json'
+        }
+        print(orderHeaders)
+        stocklist=data.get('stocks').split(",")
+        for i in stocklist:
+            contract = getContractDetails(orderHeaders,i)
+            print(contract.get('token'))
+            script = getScriptDetails(orderHeaders,contract.get('token'))
+            ltp=int(float(script.get('LTP')))
+            print(script.get('TSymbl'))
+            if scanname=='GGG':
+                high=int(float(script.get('High')))
+                high = high+(ltp*0.001)
+                high = round(high,1)
+                placeBuyOrder(orderHeaders,script.get('TSymbl'),contract.get('token'),high,high)
+            if scanname=='RRR':
+                low=int(float(script.get('Low')))
+                low = low - (ltp*0.001)
+                low = round(low,1)
+                placeSellOrder(orderHeaders,script.get('TSymbl'),contract.get('token'),low,low)
         
     # Return a success message
     return 'JSON received!'
