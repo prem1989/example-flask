@@ -26,7 +26,7 @@ def handle_post():
     scanname=data.get('scan_name')
     print(data.get('scan_name'))
     start = datetime.time(9, 0, 0)
-    end = datetime.time(10, 30, 0)
+    end = datetime.time(11, 30, 0)
     current = datetime.datetime.now().time()
     if time_in_range(start, end, current):
         sessionid=getUserSession()
