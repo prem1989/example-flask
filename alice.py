@@ -36,14 +36,14 @@ def getUserSession():
     sessionid = (json_obj_session['sessionID'])
     return sessionid
     
-def placeBuyOrder(orderHeaders,stockName,symbolId,price,trigPrice):
+def placeBuyOrder(orderHeaders,stockName,symbolId,price,trigPrice,stopLoss,target):
     orderPayload = json.dumps([
       {
         "complexty": "regular",
         "discqty": "0",
         "exch": "NSE",
         "pCode": "MIS",
-        "prctyp": "SL",
+        "prctyp": "BO",
         "price": price,
         "qty": 1,
         "ret": "DAY",
@@ -51,20 +51,22 @@ def placeBuyOrder(orderHeaders,stockName,symbolId,price,trigPrice):
         "trading_symbol": stockName,
         "transtype": "BUY",
         "trigPrice": trigPrice,
-        "orderTag": "order1"
+        "orderTag": "order1",
+        "stopLoss":stopLoss,
+        "target":target
       }
     ])
     orderResponse = requests.request("POST", orderurl, headers=orderHeaders, data=orderPayload)
     print(orderResponse.json())
 
-def placeSellOrder(orderHeaders,stockName,symbolId,price,trigPrice):
+def placeSellOrder(orderHeaders,stockName,symbolId,price,trigPrice,stopLoss,target):
     orderPayload = json.dumps([
       {
         "complexty": "regular",
         "discqty": "0",
         "exch": "NSE",
         "pCode": "MIS",
-        "prctyp": "SL",
+        "prctyp": "BO",
         "price": price,
         "qty": 1,
         "ret": "DAY",
@@ -72,7 +74,9 @@ def placeSellOrder(orderHeaders,stockName,symbolId,price,trigPrice):
         "trading_symbol": stockName,
         "transtype": "SELL",
         "trigPrice": trigPrice,
-        "orderTag": "order1"
+        "orderTag": "order1",
+        "stopLoss":stopLoss,
+        "target":target
       }
     ])
     orderResponse = requests.request("POST", orderurl, headers=orderHeaders, data=orderPayload)
