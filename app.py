@@ -28,6 +28,9 @@ def handle_post():
     start = datetime.time(9, 0, 0)
     end = datetime.time(11, 30, 0)
     current = datetime.datetime.now().time()
+    print(start)
+    print(end)
+    print(current)
     if time_in_range(start, end, current):
         sessionid=getUserSession()
         orderHeaders = {
