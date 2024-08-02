@@ -6,12 +6,15 @@ from alice import placeSellOrder
 from alice import getScriptDetails
 from alice import getUserSession
 from alice import getContractDetails
-from datetime import datetime
+import datetime
 app = Flask(__name__)
 
 @app.route('/')
 def hello_world():
     return 'Hello from Koyeb'
+
+def time_in_range(start, end, current):
+    return start <= current <= end
     
 @app.route('/handle_post', methods=['POST'])
 def handle_post():
