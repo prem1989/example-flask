@@ -39,7 +39,7 @@ def getUserSession():
 def placeBuyOrder(orderHeaders,stockName,symbolId,price,trigPrice,stopLoss,target):
     orderPayload = json.dumps([
       {
-        "complexty": "regular",
+        "complexty": "BO",
         "discqty": "0",
         "exch": "NSE",
         "pCode": "MIS",
@@ -62,7 +62,7 @@ def placeBuyOrder(orderHeaders,stockName,symbolId,price,trigPrice,stopLoss,targe
 def placeSellOrder(orderHeaders,stockName,symbolId,price,trigPrice,stopLoss,target):
     orderPayload = json.dumps([
       {
-        "complexty": "regular",
+        "complexty": "BO",
         "discqty": "0",
         "exch": "NSE",
         "pCode": "MIS",
