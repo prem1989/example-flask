@@ -7,7 +7,7 @@ orderurl = 'https://ant.aliceblueonline.com/rest/AliceBlueAPIService/api/placeOr
 websurl = 'https://ant.aliceblueonline.com/rest/AliceBlueAPIService/api//ws/createWsSession'
 scriptDetailsurl = 'https://ant.aliceblueonline.com/rest/AliceBlueAPIService/api/ScripDetails/getScripQuoteDetails'
 masterurl = 'https://v2api.aliceblueonline.com/restpy/contract_master?exch=NSE'
-
+master_contract=''
 def getUserSession():
 
     payload = json.dumps({
@@ -97,7 +97,9 @@ def getScriptDetails(orderHeaders,stockName):
 def getContractDetails(orderHeaders,symbol):
     print(orderHeaders)
     print(symbol)
-    master_contract = requests.request("GET", masterurl, headers=orderHeaders)
+    if not master_contract:
+        print("Inside If")
+        master_contract = requests.request("GET", masterurl, headers=orderHeaders)
     master=json.loads(master_contract.text)
     for contract in master['NSE']:
         if contract.get('symbol')==symbol:
