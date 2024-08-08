@@ -26,7 +26,7 @@ def handle_post():
     scanname=data.get('scan_name')
     print(data.get('scan_name'))
     start = datetime.time(3, 30, 0)
-    end = datetime.time(6, 0, 0)
+    end = datetime.time(5, 30, 0)
     current = datetime.datetime.now().time()
     print(start)
     print(end)
