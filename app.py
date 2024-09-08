@@ -51,14 +51,14 @@ def handle_post():
                 high = round(high,1)
                 target= round((high*0.005),1)
                 stoploss= round((high*0.005),1)
-                placeBuyOrder(orderHeaders,script.get('TSymbl'),contract.get('token'),high,high,stoploss,target)
+                placeSellOrder(orderHeaders,script.get('TSymbl'),contract.get('token'),high,high,stoploss,target)
             if scanname=='RRR':
                 low=int(float(script.get('Low')))
                 low = low - (ltp*0.001)
                 low = round(low,1)
                 target= round((low*0.005),1)
                 stoploss= round((low*0.005),1)
-                placeSellOrder(orderHeaders,script.get('TSymbl'),contract.get('token'),low,low,stoploss,target)
+                placeBuyOrder(orderHeaders,script.get('TSymbl'),contract.get('token'),low,low,stoploss,target)
         
     # Return a success message
     return 'JSON received!'
